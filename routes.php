@@ -16,6 +16,7 @@ return [
     "/users/delete" => "controllers/users/delete.php",
     "/users/show" => "controllers/users/show.php",
     "/users/new" => "controllers/users/new.php",
+    "/users/import" => "controllers/users/import.php",
 
     // invoice routes 
     "/invoices" => "controllers/invoices/index.php",
@@ -40,6 +41,7 @@ return [
     "/subscriptions/create" => "controllers/subscriptions/create.php",
     "/subscriptions/delete" => "controllers/subscriptions/delete.php",
     "/subscriptions/update" => "controllers/subscriptions/update.php",
+    "/subscriptions/import" => "controllers/subscriptions/import.php",
 
     // plans routes 
     "/plans" => "controllers/plans/index.php",

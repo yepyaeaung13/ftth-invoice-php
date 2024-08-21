@@ -1,20 +1,22 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $id = $_POST['id'];
-    $ipnet_id = $_POST['ipnet_id'];
-    $status = $_POST['status'];
-    $mbps = $_POST['mbps'];
-    $name = $_POST['name'];
-    $address = $_POST['address'];
-    $phone = $_POST['phone'];
-    $location = $_POST['location'];
-    $installed_date = $_POST['installed_date'];
-    $remark = $_POST['remark'];
+use Core\Database;
 
-    // create query 
+session_start();
 
-    header("location: /users/show?id=1");
+if ($_SESSION['user'] && $_SERVER['REQUEST_METHOD'] == "POST") {
+    $config = include base_path("config.php");
+    $db = new Database($config['database']);
+
+    $plan_name = $_POST['name'];
+    $plan_price = $_POST['price'];
+
+    $last_plan_id = $db->query("INSERT INTO plans (name,price) VALUES (:name,:price)", [
+        "name" => $plan_name,
+        "price" => $plan_price
+    ])->last_inserted_id();
+
+    header("location: /plans/show?id={$last_plan_id}");
 } else {
     header("location: /login");
 }

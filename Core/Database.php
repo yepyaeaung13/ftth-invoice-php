@@ -53,4 +53,8 @@ class Database
 
         return $result;
     }
+    public function last_inserted_id()
+    {
+        return $this->connection->lastInsertId();
+    }
 }

@@ -21,56 +21,72 @@
         </div>
 
         <div class="overflow-y-scroll bg-slate-200 px-5 py-5">
-            <div class="bg-white p-5">
-                <form action="/subscriptions/update" id="user-edit-form" class="flex flex-col gap-10" method="post">
-                    <input type="hidden" value="1" name="id" class="outline-none border-b border-b-slate-300 py-2 text-xl w-2/3 focus:border-b-slate-500">
-                    <input type="text" value="IPNET-7001" name="ipnet_id" class="outline-none border-b border-b-slate-300 py-2 text-xl w-2/3 focus:border-b-slate-500">
+            <div class="bg-white p-5 flex flex-col gap-10">
+                <form action="" method="get" id="selectForm">
+                    <select name="id" id="ipnet-user-select" class="outline-none border-b border-b-slate-300 bg-white py-2 text-xl w-2/3">
+                        <option value="">select ipnet id</option>
+                        <?php foreach ($ipnet_users as $ipnet_user) : ?>
+                            <option value="<?= $ipnet_user['id'] ?>"
+                                <?php if ($selected_ipnet_user) : ?>
+                                <?= $selected_ipnet_user['id'] == $ipnet_user['id'] ? "selected" : "" ?>
+                                <?php endif ?>>
+                                <?= $ipnet_user['ipnet_id'] ?>
+                            </option>
+                        <?php endforeach ?>
+                    </select>
+                    <input type="submit" id="select-submit-btn" class="hidden">
+                </form>
+                <form action="/subscriptions/create" id="user-edit-form" class="flex flex-col gap-10 
+                <?php if ($selected_ipnet_user) : ?>
+                    <?= $selected_ipnet_user['status'] !== "active" ? "opacity-50 pointer-events-none" : "" ?>
+                <?php endif ?>
+                " method="post">
+                    <input type="hidden" value="<?= $selected_ipnet_user ? $selected_ipnet_user['id'] : "" ?>" name="user_id">
+                    <input type="hidden" value="<?= $selected_ipnet_user ? $selected_ipnet_user['status_id'] : "" ?>" name="status_id">
+                    <input type="hidden" value="<?= $selected_ipnet_user ? $selected_ipnet_user['plan_id'] : "" ?>" name="plan_id">
                     <div class="grid grid-cols-2 gap-5">
                         <div class="flex gap-3 items-center">
                             <label for="" class="font-medium">Status</label>
-                            <select name="status" id="status" class="w-24 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
-                                <option value="active">active</option>
-                                <option value="inactive">inactive</option>
-                            </select>
+                            <input type="text" name="status" value="<?= $selected_ipnet_user ? $selected_ipnet_user['status'] : "" ?>" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500 pointer-events-none" placeholder="Name...">
                         </div>
                         <div class="flex gap-3 items-center">
                             <label for="" class="font-medium">Plans</label>
-                            <select name="status" id="status" class="w-24 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
-                                <option value="10">10 Mbps</option>
-                                <option value="15">15 Mbps</option>
-                                <option value="20">20 Mbps</option>
-                            </select>
+                            <input type="text" name="plan" value="<?= $selected_ipnet_user ? $selected_ipnet_user['plan'] : "" ?>" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500 pointer-events-none" placeholder="Name...">
                         </div>
+
 
                         <div class="flex gap-3 items-center">
                             <label for="" class="font-medium">Name</label>
-                            <input type="text" value="Ye Pyae Aung" name="name" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500" placeholder="Name...">
+                            <input type="text" name="name" value="<?= $selected_ipnet_user ? $selected_ipnet_user['name'] : "" ?>" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500 pointer-events-none" placeholder="Name...">
                         </div>
                         <div class="flex gap-3 items-center">
-                            <label for="" class="font-medium">Start Date</label>
-                            <input type="date" value="08/08/2024" name="invoice_date" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
+                            <label for="" class="font-medium">Price</label>
+                            <input type="text" name="plan" value="<?= $selected_ipnet_user ? $selected_ipnet_user['price'] : "" ?>" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500 pointer-events-none" placeholder="price...">
                         </div>
                         <div class="flex gap-3 items-center">
                             <label for="" class="font-medium">Address</label>
-                            <input type="text" name="address" value="No-223/9, Moe Kaung Road, Yankin" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500" placeholder="street...">
+                            <input type="text" name="address" value="<?= $selected_ipnet_user ? $selected_ipnet_user['address'] : "" ?>" class=" w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500 pointer-events-none" placeholder="street...">
                         </div>
                         <div class="flex gap-3 items-center">
-                            <label for="" class="font-medium">End Date</label>
-                            <input type="date" value="08/08/2024" name="invoice_date" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
+                            <label for="" class="font-medium">Start Date</label>
+                            <input type="date" name="start_date" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500" required>
                         </div>
                         <div class="flex gap-3 items-center">
                             <label for="" class="font-medium">Phone</label>
-                            <input type="text" value="09-898626060" name="phone" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500" placeholder="Phone...">
+                            <input type="text" name="phone" value="<?= $selected_ipnet_user ? $selected_ipnet_user['phone'] : "" ?>" class=" w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500 pointer-events-none" placeholder="Phone...">
                         </div>
-
+                        <div class="flex gap-3 items-center">
+                            <label for="" class="font-medium">End Date</label>
+                            <input type="date" name="end_date" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500" required>
+                        </div>
 
                         <div class="flex gap-3 items-center pointer-events-none">
                             <label for="" class="font-medium">Subscriptions No</label>
-                            <input type="text" value="INV-000001" name="invoice_no" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
+                            <input type="text" value="<?= $next_sub_no ?>" name="sub_no" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
                         </div>
                         <div class="col-span-2 flex gap-3 items-center">
                             <label for="" class="font-medium">Remark</label>
-                            <input type="text" value="Paid to october" name="remark" class="w-full px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500" placeholder="remark or comments......">
+                            <input type="text" name="remark" class="w-full px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500" placeholder="remark or comments......">
                         </div>
                     </div>
                     <input type="submit" id="create-submit-btn" class="hidden">

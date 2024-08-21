@@ -10,3 +10,13 @@
     scrollbar-width: thin;
     scroll-behavior: smooth;
 }
+
+body,
+#invoice-body {
+    counter-reset: recordCounter;
+}
+
+.item-id::before {
+    counter-increment: recordCounter;
+    content: counter(recordCounter);
+}

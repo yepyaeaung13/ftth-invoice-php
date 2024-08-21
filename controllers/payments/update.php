@@ -1,22 +1,27 @@
 <?php
 
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    $id = $_POST['id'];
-    $invoice_no = $_POST['invoice_no'];
-    $invoice_date = $_POST['invoice_date'];
-    $mbps = $_POST['mbps'];
-    $description = $_POST['description'];
-    $qty = $_POST['qty'];
-    $unit = $_POST['unit'];
-    $price = $_POST['price'];
-    $amount = $_POST['amount'];
-    $remark = $_POST['remark'];
+use Core\Database;
 
-    echo $id, $invoice_no, $invoice_date, $mbps, $description, $qty, $unit, $price, $amount, $remark;
+session_start();
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" && $_SESSION['user']) {
+    $config = include base_path("config.php");
+    $db = new Database($config['database']);
+
+    $id = $_POST['payment_id'];
+    $payment_date = $_POST['payment_date'];
+    $method = $_POST['payment_method'];
+    $amount = $_POST['amount'];
 
     // edit query 
+    $db->query("UPDATE `payments` SET `date`=:date,`amount`= :amount,`method`=:method,`updated_at`=NOW() WHERE id=:id", [
+        "id" => $id,
+        "date" => $payment_date,
+        "amount" => $amount,
+        "method" => $method,
+    ]);
 
-    // header("location: /invoices/show?id=1");
+    header("location: /payments/show?id={$id}");
 } else {
     header("location: /login");
 }

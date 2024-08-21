@@ -29,17 +29,26 @@
                     <div class="grid grid-cols-2 gap-5">
                         <div class="flex gap-3 items-center">
                             <label for="" class="font-medium">Status</label>
-                            <select name="status" id="status" class="w-24 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
-                                <option value="active">active</option>
-                                <option value="inactive">inactive</option>
+                            <select name="status_id" id="status_id" class="w-24 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
+                                <?php foreach ($ipnet_users_status as $status) : ?>
+                                    <option value="<?= $status['id'] ?>"><?= $status['status'] ?></option>
+                                <?php endforeach ?>
                             </select>
                         </div>
                         <div class="flex gap-3 items-center">
-                            <label for="" class="font-medium">Mbps</label>
-                            <select name="mbps" id="mbps" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
-                                <option value="10">10 Mbps</option>
-                                <option value="15">15 Mbps</option>
-                                <option value="20">20 Mbps</option>
+                            <label for="" class="font-medium">Plan</label>
+                            <select name="plan_id" id="plan" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
+                                <?php foreach ($plans as $plan) : ?>
+                                    <option value="<?= $plan['id'] ?>" <?= $plan['status'] !== "active" ? "disabled" : "" ?>><?= $plan['name'] ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <label for="" class="font-medium">Townships</label>
+                            <select name="township_id" id="township-id" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
+                                <?php foreach ($townships as $township) : ?>
+                                    <option value="<?= $township['id'] ?>"><?= $township['name'] ?></option>
+                                <?php endforeach ?>
                             </select>
                         </div>
                         <div class="flex gap-3 items-center">
@@ -60,7 +69,7 @@
                         </div>
                         <div class="flex gap-3 items-center">
                             <label for="" class="font-medium">Installed Date</label>
-                            <input type="date" name="installed_date" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
+                            <input type="date" name="installed_date" value="<?= date("Y-m-d") ?>" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
                         </div>
                         <div class="col-span-2 flex gap-3 items-center">
                             <label for="" class="font-medium">Remark</label>

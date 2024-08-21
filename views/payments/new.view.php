@@ -9,7 +9,7 @@
             <div class="flex items-center gap-2">
                 <div id="edit-btn-group" class="flex items-center gap-2">
                     <button id="create-confirm-btn" class="bg-blue-500 rounded-md px-3 py-1 text-white">Confirm</button>
-                    <a href="/invoices/show?invoice_id=1" id="create-cancel-btn" class="bg-slate-500 rounded-md px-3 py-1 text-white">Cancel</a>
+                    <a href="/invoices/show?id=<?= $invoice['id'] ?>" id="create-cancel-btn" class="bg-slate-500 rounded-md px-3 py-1 text-white">Cancel</a>
                 </div>
             </div>
             <div class="flex justify-center items-center gap-1 text-slate-700 text-lg font-medium">
@@ -22,17 +22,22 @@
 
         <div class="overflow-y-scroll bg-slate-200 px-5 py-5">
             <form action="/payments/create" class="bg-white p-5 grid grid-cols-2 gap-5" method="post">
+                <input type="hidden" name="invoice_id" value="<?= $invoice['id'] ?>">
                 <div class="flex gap-3 items-center">
                     <label for="" class="font-medium">IPNET-ID</label>
-                    <input type="text" name="ipnet_id" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500 pointer-events-none">
+                    <input type="text" name="ipnet_id" value="<?= $invoice['ipnet_id'] ?>" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500 pointer-events-none">
                 </div>
                 <div class="flex gap-3 items-center">
                     <label for="" class="font-medium">Invoice No</label>
-                    <input type="text" name="invoice_no" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500 pointer-events-none">
+                    <input type="text" name="invoice_no" value="<?= $invoice['invoice_no'] ?>" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500 pointer-events-none">
                 </div>
                 <div class="flex gap-3 items-center">
                     <label for="" class="font-medium">Payment Date</label>
-                    <input type="date" name="payment_date" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
+                    <input type="date" name="payment_date" value="<?= date("Y-m-d") ?>" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
+                </div>
+                <div class="flex gap-3 items-center">
+                    <label for="" class="font-medium">Payment No</label>
+                    <input type="text" name="payment_no" value="<?= $next_pv_no ?>" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
                 </div>
                 <div class="flex gap-3 items-center">
                     <label for="" class="font-medium">Payment Method</label>
@@ -43,7 +48,7 @@
                 </div>
                 <div class="flex gap-3 items-center">
                     <label for="" class="font-medium">Amount</label>
-                    <input type="number" name="amount" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
+                    <input type="number" name="amount" value="<?= $invoice['total_amount'] - $invoice['discount_amount'] ?>" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500 pointer-events-none">
                 </div>
                 <input type="submit" id="create-submit-btn" class="hidden">
             </form>

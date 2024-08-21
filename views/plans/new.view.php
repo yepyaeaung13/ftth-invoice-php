@@ -25,11 +25,11 @@
                 <form action="/plans/create" class="bg-white p-5 grid grid-cols-2 gap-5" method="post">
                     <div class="flex gap-3 items-center">
                         <label for="" class="font-medium">Plan Name</label>
-                        <input type="text" name="ipnet_id" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
+                        <input type="text" name="name" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
                     </div>
                     <div class="flex gap-3 items-center">
                         <label for="" class="font-medium">Price</label>
-                        <input type="number" name="amount" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
+                        <input type="number" name="price" class="w-96 px-1 outline-none border-b border-b-slate-300 focus:border-b-slate-500">
                     </div>
                     <input type="submit" id="create-submit-btn" class="hidden">
                 </form>

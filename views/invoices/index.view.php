@@ -13,20 +13,21 @@
                 <h1>Invoices</h1>
             </div>
 
-            <div class="flex justify-center">
-                <input type="search" class="w-96 border border-blue-500 rounded-md outline-none px-2 py-1" placeholder="search by Invoice no" autofocus>
-            </div>
+            <form action="" method="get" class="flex justify-center">
+                <input type="search" name="search" value="<?= isset($_GET['search']) ? $_GET['search'] : "" ?>" class="w-96 border border-blue-500 rounded-md outline-none px-2 py-1" placeholder="search by IPNET-ID">
+                <input type="submit" class="hidden">
+            </form>
 
             <div class="flex gap-5 justify-end items-center">
                 <div class="flex gap-3 text-white items-center">
-                    <p class="text-black text-lg">1 / 1</p>
+                    <p class="text-black text-lg"><?= $page ?>/ <?= $total_page ?></p>
                     <div class="flex gap-2">
-                        <a href="" class="text-blue-500 bg-slate-200 rounded-md px-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <a href="/invoices?page=<?= isset($_GET['page']) ? $_GET['page'] - 1 : 1  ?><?= isset($_GET['filter']) ? "&filter=" . $_GET['filter'] : "" ?><?= isset($_GET['sort']) ? "&sort=" . $_GET['sort'] : "" ?>" class="text-blue-500 bg-slate-200 rounded-md px-2 <?= $page <= 1 ? "opacity-50 pointer-events-none" : "" ?>">
+                            <svg xmlns=" http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                             </svg>
                         </a>
-                        <a href="" class="text-blue-500 bg-slate-200 rounded-md px-2">
+                        <a href="/invoices?page=<?= isset($_GET['page']) ? $_GET['page'] + 1 : 2  ?><?= isset($_GET['filter']) ? "&filter=" . $_GET['filter'] : "" ?><?= isset($_GET['sort']) ? "&sort=" . $_GET['sort'] : "" ?>" class="text-blue-500 bg-slate-200 rounded-md px-2 <?= $page >= $total_page ? "opacity-50 pointer-events-none" : "" ?>">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                             </svg>
@@ -41,7 +42,7 @@
                     </a>
                     <a href="/invoices?layout=card" class="bg-blue-500 rounded-md px-2">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
                         </svg>
                     </a>
                 </div>
@@ -49,46 +50,120 @@
         </div>
 
         <!-- users list table  -->
-        <div class="2xl:h-[90vh] lg:h-[80vh] w-full bg-slate-200 px-2">
+        <div class="2xl:h-[90vh] lg:h-[80vh] overflow-y-scroll w-full bg-slate-200 px-2">
             <?php if (isset($_GET['layout'])) : ?>
                 <div class="flex flex-wrap gap-5 py-5">
-                    <a href="/invoices/show?id=1" class="w-80 rounded-lg shadow-md border bg-white p-3 hover:-translate-y-2 duration-300 text-nowrap flex gap-2 justify-between">
-                        <div class="flex flex-col gap-2">
-                            <p>IPNET-7001</p>
-                            <p>25000 ks</p>
+                    <?php foreach ($invoices as $invoice) : ?>
+                        <div class="w-80 rounded-lg shadow-md border bg-white p-3 hover:border-blue-500  duration-300 text-nowrap flex gap-2 justify-between">
+                            <div class="flex flex-col gap-2">
+                                <a href="/users/show?id=<?= $invoice['user_id'] ?>" class="hover:text-blue-500 duration-150"><?= $invoice['ipnet_id'] ?></a>
+                                <a href="/invoices/show?id=<?= $invoice['id'] ?>" class="hover:text-blue-500 duration-150">
+                                    <?= $invoice['invoice_no'] ?></a>
+                                <p><?= $invoice['total_amount'] - $invoice['discount_amount'] ?> ks</p>
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <p class="text-end"><?= $invoice['date'] ?></p>
+                                <p class="text-center rounded-md text-white px-2 <?= $invoice['payment_id'] !== null ? "bg-green-600" : "bg-red-500" ?>">
+                                    <?= $invoice['payment_id'] !== null ? "Paid" : "Unpaid" ?>
+                                </p>
+                            </div>
                         </div>
-                        <div class="flex flex-col gap-2">
-                            <p class="text-end">08-08-2024</p>
-                            <p class="text-center rounded-md bg-red-500 text-white px-2">No Paid</p>
-                        </div>
-                    </a>
+                    <?php endforeach ?>
                 </div>
             <?php endif ?>
             <?php if (!isset($_GET['layout'])) : ?>
                 <table class="w-full table-auto border-collapse text-sm">
                     <thead>
-                        <tr class="py-2 px-2 bg-slate-300 font-medium">
-                            <td class="border border-slate-400 px-1 py-1 text-center">Date</td>
-                            <td class="border border-slate-400 px-1 py-1 text-center">Invoice No</td>
-                            <td class="border border-slate-400 px-1 py-1 text-center">IPNET-ID</td>
-                            <td class="border border-slate-400 px-1 py-1 text-center">Plans</td>
-                            <td class="border border-slate-400 px-1 py-1 text-center">Amount</td>
-                            <td class="border border-slate-400 px-1 py-1 text-center">Payment</td>
+                        <tr class="sticky top-0 left-0 shadow-lg py-2 px-2 bg-slate-300 font-medium">
+                            <td class="border border-slate-400 px-1 py-1 text-center">
+                                <a href="/invoices?page=<?= $page ?>&filter=invoices.date&sort=ASC" id="sort" class="inline-block mx-1 bg-slate-600 text-white <?= $page !== 1 ? "hidden" : "" ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+                                    </svg>
+                                </a>
+                                Date
+                                <a href="/invoices?page=<?= $page ?>&filter=invoices.date&sort=DESC" id="sort" class="inline-block mx-1 bg-slate-600 text-white <?= $page !== 1 ? "hidden" : "" ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+                                    </svg>
+                                </a>
+                            </td>
+                            <td class="border border-slate-400 px-1 py-1 text-center">
+                                <a href="/invoices?page=<?= $page ?>&filter=ipnet_users.ipnet_id&sort=ASC" id="sort" class="inline-block mx-1 bg-slate-600 text-white <?= $page !== 1 ? "hidden" : "" ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+                                    </svg>
+                                </a>
+                                IPNET-ID
+                                <a href="/invoices?page=<?= $page ?>&filter=ipnet_users.ipnet_id&sort=DESC" id="sort" class="inline-block mx-1 bg-slate-600 text-white <?= $page !== 1 ? "hidden" : "" ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+                                    </svg>
+                                </a>
+                            </td>
+                            <td class="border border-slate-400 px-1 py-1 text-center">
+                                <a href="/invoices?page=<?= $page ?>&filter=invoices.invoice_no&sort=ASC" id="sort" class="inline-block mx-1 bg-slate-600 text-white <?= $page !== 1 ? "hidden" : "" ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+                                    </svg>
+                                </a>
+                                Invoice No
+                                <a href="/invoices?page=<?= $page ?>&filter=invoices.invoice_no&sort=DESC" id="sort" class="inline-block mx-1 bg-slate-600 text-white <?= $page !== 1 ? "hidden" : "" ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+                                    </svg>
+                                </a>
+                            </td>
+                            <td class="border border-slate-400 px-1 py-1 text-center">Descriptions</td>
+                            <td class="border border-slate-400 px-1 py-1 text-center">
+                                <a href="/invoices?page=<?= $page ?>&filter=invoices.total_amount&sort=ASC" id="sort" class="inline-block mx-1 bg-slate-600 text-white <?= $page !== 1 ? "hidden" : "" ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+                                    </svg>
+                                </a>
+                                Amount
+                                <a href="/invoices?page=<?= $page ?>&filter=invoices.total_amount&sort=DESC" id="sort" class="inline-block mx-1 bg-slate-600 text-white <?= $page !== 1 ? "hidden" : "" ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+                                    </svg>
+                                </a>
+                            </td>
+                            <td class="border border-slate-400 px-1 py-1 text-center">
+                                <a href="/invoices?page=<?= $page ?>&filter=payments.id&sort=ASC" id="sort" class="inline-block mx-1 bg-slate-600 text-white <?= $page !== 1 ? "hidden" : "" ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
+                                    </svg>
+                                </a>
+                                Payment
+                                <a href="/invoices?page=<?= $page ?>&filter=payments.id&sort=DESC" id="sort" class="inline-block mx-1 bg-slate-600 text-white <?= $page !== 1 ? "hidden" : "" ?>">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-3">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+                                    </svg>
+                                </a>
+                            </td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="hover:bg-white duration-300">
-                            <td class="px-2 py-1 border border-slate-400">13-01-2024</td>
-                            <td class="px-2 py-1 border border-slate-400">
-                                <a href="/invoices/show?id=1" class="hover:text-blue-500">
-                                    INV-000001
-                                </a>
-                            </td>
-                            <td class="px-2 py-1 border border-slate-400">IPNET-7001</td>
-                            <td class="px-2 py-1 border border-slate-400">10 Mbps</td>
-                            <td class="px-2 py-1 border border-slate-400">25000 ks</td>
-                            <td class="px-2 py-1 border border-slate-400 text-center text-red-500 font-medium">Not Paid</td>
-                        </tr>
+                        <?php foreach ($invoices as $invoice) : ?>
+                            <tr class="hover:bg-white duration-300">
+                                <td class="px-2 py-1 border border-slate-400"><?= $invoice['date'] ?></td>
+                                <td class="px-2 py-1 border border-slate-400">
+                                    <a href="/users/show?id=<?= $invoice['user_id'] ?>" class="hover:text-blue-500">
+                                        <?= $invoice['ipnet_id'] ?>
+                                    </a>
+                                </td>
+                                <td class="px-2 py-1 border border-slate-400">
+                                    <a href="/invoices/show?id=<?= $invoice['id'] ?>" class="hover:text-blue-500">
+                                        <?= $invoice['invoice_no'] ?>
+                                    </a>
+                                </td>
+                                <td class="px-2 py-1 border border-slate-400"><?= $invoice['remark'] ?></td>
+                                <td class="px-2 py-1 border border-slate-400 text-right"><?= $invoice['total_amount'] - $invoice['discount_amount'] ?> ks</td>
+                                <td class="px-2 py-1 border border-slate-400 text-center font-medium <?= $invoice['payment_id'] !== null ? "text-green-600" : "text-red-500" ?>">
+                                    <?= $invoice['payment_id'] !== null ? "Paid" : "Unpaid" ?>
+                                </td>
+                            </tr>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             <?php endif ?>
