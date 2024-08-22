@@ -134,7 +134,7 @@ if ($("#invoice-table") !== null) {
 
 // invoice new create update date and descriptions event listener
 if ($("#invoice-date-input") !== null) {
-  $("#invoice-date-input").keyup(() => {
+  $("#invoice-date-input").change(() => {
     $("#invoice-date-info")[0].value = $("#invoice-date-input")[0].value;
   });
 
@@ -171,12 +171,13 @@ if (document.querySelector("#download-image")) {
       allowTaint: true, // For images without CORS headers
       logging: true,
     }).then((canvas) => {
-      const base64Image = canvas.toDataURL("image/png", 1.0);
-      const aElement = document.createElement("a");
-      aElement.setAttribute("href", base64Image);
-      aElement.setAttribute("download", `${invoiceNo.innerText}-invoice.png`);
-      aElement.click();
-      aElement.remove();
+      const imgData = canvas.toDataURL("image/png", 1.0);
+      var link = document.createElement("a");
+      link.href = imgData;
+      link.download = `${invoiceNo.innerText}-invoice.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     });
   });
 

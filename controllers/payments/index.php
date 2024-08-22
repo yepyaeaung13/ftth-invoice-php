@@ -19,11 +19,11 @@ if ($_SESSION['user']) {
     $all_payments = $db->query("SELECT payments.*, invoices.user_id AS user_id, invoices.invoice_no AS invoice_no, ipnet_users.ipnet_id AS ipnet_id FROM payments LEFT JOIN invoices ON invoices.id=payments.invoice_id LEFT JOIN ipnet_users ON ipnet_users.id=invoices.user_id")->getAll();
 
     if (!isset($_GET['filter']) && !isset($_GET['search'])) {
-        $payments = $db->query("SELECT payments.*, invoices.user_id AS user_id, invoices.invoice_no AS invoice_no, ipnet_users.ipnet_id AS ipnet_id FROM payments LEFT JOIN invoices ON invoices.id=payments.invoice_id LEFT JOIN ipnet_users ON ipnet_users.id=invoices.user_id LIMIT $pv_per_page OFFSET $offset")->getAll();
+        $payments = $db->query("SELECT payments.*, invoices.user_id AS user_id, invoices.invoice_no AS invoice_no, ipnet_users.ipnet_id AS ipnet_id FROM payments LEFT JOIN invoices ON invoices.id=payments.invoice_id LEFT JOIN ipnet_users ON ipnet_users.id=invoices.user_id ORDER BY payments.date DESC LIMIT $pv_per_page OFFSET $offset")->getAll();
     }
     if (isset($_GET['search'])) {
         $search = "%" . $_GET['search'] . "%";
-        $payments = $db->query("SELECT payments.*, invoices.user_id AS user_id, invoices.invoice_no AS invoice_no, ipnet_users.ipnet_id AS ipnet_id FROM payments LEFT JOIN invoices ON invoices.id=payments.invoice_id LEFT JOIN ipnet_users ON ipnet_users.id=invoices.user_id WHERE ipnet_users.ipnet_id LIKE '$search' ")->getAll();
+        $payments = $db->query("SELECT payments.*, invoices.user_id AS user_id, invoices.invoice_no AS invoice_no, ipnet_users.ipnet_id AS ipnet_id FROM payments LEFT JOIN invoices ON invoices.id=payments.invoice_id LEFT JOIN ipnet_users ON ipnet_users.id=invoices.user_id WHERE ipnet_users.ipnet_id LIKE '$search' ORDER BY payments.date DESC")->getAll();
     }
     if (isset($_GET['filter'])) {
         $sort = $_GET['sort'];

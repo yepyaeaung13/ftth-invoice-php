@@ -1,5 +1,5 @@
 <nav class="flex justify-between px-5 py-2 shadow-md bg-blue-500 text-white">
-    <h1>IPNet Invoice</h1>
+    <h1>FTTH Subscriptions & Invoice</h1>
     <div class="flex gap-10">
         <a href="/setting" class="flex gap-2 items-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

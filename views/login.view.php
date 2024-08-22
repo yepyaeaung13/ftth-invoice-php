@@ -3,7 +3,7 @@
 
 <main style="background-image: url(assets/photos/login.jpg);" class="bg-cover bg-center p-5 w-full h-screen flex flex-col gap-5 pt-28 items-center">
     <div>
-        <h1 class="text-white text-2xl font-serif font-bold">IPNET INVOICE</h1>
+        <h1 class="text-white text-2xl font-serif font-bold">FTTH Subscriptions & Invoice</h1>
     </div>
     <form action="" method="post" class="bg-slate-800 text-white bg-opacity-75 md:w-96 w-80 p-5 flex flex-col justify-center items-center gap-5 bg-third rounded-lg shadow-lg">
         <h1 class="text-center font-bold font-serif text-lg">Login with account</h1>

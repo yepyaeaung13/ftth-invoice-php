@@ -16,5 +16,7 @@
         <li><a href="/payments" class="px-5 py-3 <?= uris("/payments") || uris("/payments/show") || uris("/payments/new") ? "bg-white text-black" : "" ?>">payments</a></li>
 
         <li><a href="/plans" class="px-5 py-3 <?= uris("/plans") || uris("/plans/show") || uris("/plans/new") ? "bg-white text-black" : "" ?>">plans</a></li>
+
+        <li><a href="/settings" class="px-5 py-3 <?= uris("/settings") || uris("/settings/show") || uris("/settings/new") ? "bg-white text-black" : "" ?>">settings</a></li>
     </ul>
 </nav>

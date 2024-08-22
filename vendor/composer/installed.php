@@ -3,7 +3,7 @@
         'name' => 'yepyae/ipnet-invoice',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '2b8f28952f20e522fd58f543c4d4558b3582703f',
+        'reference' => '65ec6217296ad46f91b72d53db0340fc31236140',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -139,7 +139,7 @@
         'yepyae/ipnet-invoice' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '2b8f28952f20e522fd58f543c4d4558b3582703f',
+            'reference' => '65ec6217296ad46f91b72d53db0340fc31236140',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -97,6 +97,32 @@ if ($_SESSION['user']) {
         "end_date" => date("Y") . "-12-31"
     ])->getAll();
 
+    // start user per twoship 
+    $Bahan = $db->query("SELECT id FROM ipnet_users WHERE township_id=1 and status_id=1")->getAll();
+
+    $Tarmwe = $db->query("SELECT id FROM ipnet_users WHERE township_id=2 and status_id=1")->getAll();
+
+    $Yankin = $db->query("SELECT id FROM ipnet_users WHERE township_id=3 and status_id=1")->getAll();
+
+    $South_Oakkalapa = $db->query("SELECT id FROM ipnet_users WHERE township_id=4 and status_id=1")->getAll();
+
+    $Thingangyun = $db->query("SELECT id FROM ipnet_users WHERE township_id=5 and status_id=1")->getAll();
+
+    $Sanchaung = $db->query("SELECT id FROM ipnet_users WHERE township_id=6 and status_id=1")->getAll();
+
+    $Tarketa = $db->query("SELECT id FROM ipnet_users WHERE township_id=7 and status_id=1")->getAll();
+
+    $Pazundaung = $db->query("SELECT id FROM ipnet_users WHERE township_id=8 and status_id=1")->getAll();
+
+    $Alone = $db->query("SELECT id FROM ipnet_users WHERE township_id=9 and status_id=1")->getAll();
+
+    $Kyimyindaing = $db->query("SELECT id FROM ipnet_users WHERE township_id=10 and status_id=1")->getAll();
+
+    $Hlaing = $db->query("SELECT id FROM ipnet_users WHERE township_id=11 and status_id=1")->getAll();
+
+    $Mingalar_Taung_Nyunt = $db->query("SELECT id FROM ipnet_users WHERE township_id=12 and status_id=1")->getAll();
+    // end user per township 
+
     $jan_amounts = array_reduce($jan, function ($pv, $cv) {
         return $pv + $cv['amount'];
     }, 0);
@@ -170,6 +196,18 @@ if ($_SESSION['user']) {
         "oct_amounts" => $oct_amounts,
         "nov_amounts" => $nov_amounts,
         "dec_amounts" => $dec_amounts,
+        "Bahan" => $Bahan,
+        "Tarmwe" => $Tarmwe,
+        "Yankin" => $Yankin,
+        "South_Oakkalapa" => $South_Oakkalapa,
+        "Thingangyun" => $Thingangyun,
+        "Sanchaung" => $Sanchaung,
+        "Tarketa" => $Tarketa,
+        "Pazundaung" => $Pazundaung,
+        "Alone" => $Alone,
+        "Kyimyindaing" => $Kyimyindaing,
+        "Hlaing" => $Hlaing,
+        "Mingalar_Taung_Nyunt" => $Mingalar_Taung_Nyunt,
     ]);
 } else {
     header("location: /login");

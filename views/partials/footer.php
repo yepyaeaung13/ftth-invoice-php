@@ -297,6 +297,88 @@
             },
         });
     }
+
+    //all township per users
+    if (document.getElementById("chart-bars")) {
+        var ctx = document.getElementById("chart-bars").getContext("2d");
+        new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: ["Bahan", "Tarmwe", "Yankin", "South Oakkalapa", "Thingangyun", "Sanchaung", "Tarketa", "Pazundaung", "Alone", "Kyimyindaing", "Hlaing", "Mingalar Taung Nyunt"],
+                datasets: [{
+                    label: "Users",
+                    tension: 0.4,
+                    borderWidth: 0,
+                    borderRadius: 4,
+                    borderSkipped: false,
+                    backgroundColor: "black",
+                    data: [
+                        <?= count($Bahan) ?>,
+                        <?= count($Tarmwe) ?>,
+                        <?= count($Yankin) ?>,
+                        <?= count($South_Oakkalapa) ?>,
+                        <?= count($Thingangyun) ?>,
+                        <?= count($Sanchaung) ?>,
+                        <?= count($Tarketa) ?>,
+                        <?= count($Pazundaung) ?>,
+                        <?= count($Alone) ?>,
+                        <?= count($Kyimyindaing) ?>,
+                        <?= count($Hlaing) ?>,
+                        <?= count($Mingalar_Taung_Nyunt) ?>,
+                    ],
+                    maxBarThickness: 6,
+                }, ],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                },
+                interaction: {
+                    intersect: false,
+                    mode: "index",
+                },
+                scales: {
+                    y: {
+                        grid: {
+                            drawBorder: true,
+                            display: true,
+                            drawOnChartArea: true,
+                            drawTicks: true,
+                        },
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 600,
+                            beginAtZero: true,
+                            padding: 15,
+                            font: {
+                                size: 14,
+                                family: "Open Sans",
+                                style: "normal",
+                                lineHeight: 2,
+                            },
+                            color: "black",
+                        },
+                    },
+                    x: {
+                        grid: {
+                            drawBorder: true,
+                            display: true,
+                            drawOnChartArea: true,
+                            drawTicks: true,
+                        },
+                        ticks: {
+                            display: true,
+                            color: "black",
+                        },
+                    },
+                },
+            },
+        });
+    }
 </script>
 
 

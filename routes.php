@@ -51,5 +51,6 @@ return [
     "/plans/update" => "controllers/plans/update.php",
     "/plans/delete" => "controllers/plans/delete.php",
 
-    "/setting" => "controllers/setting.php",
+    "/settings" => "controllers/settings/index.php",
+    "/settings/backup" => "controllers/settings/backup.php",
 ];

@@ -37,6 +37,10 @@ class Database
     {
         return $this->statement->fetchAll();
     }
+    public function getColumn()
+    {
+        return $this->statement->fetchAll(PDO::FETCH_COLUMN);
+    }
 
     public function find()
     {
@@ -56,5 +60,9 @@ class Database
     public function last_inserted_id()
     {
         return $this->connection->lastInsertId();
+    }
+    public function quote($value)
+    {
+        return $this->connection->quote($value);
     }
 }

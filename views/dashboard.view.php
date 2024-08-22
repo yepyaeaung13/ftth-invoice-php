@@ -254,9 +254,16 @@
         </div>
 
         <div class="p-4 border-black/12.5 dark:bg-slate-850 dark:shadow-dark-xl shadow-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
-            <h6 class="dark:text-white font-semibold">Monthly Incomes</h6>
+            <h6 class="dark:text-white font-semibold">Current Year's Monthly Incomes</h6>
             <div class="pt-4 chart">
                 <canvas id="chart-line-projects" class="chart-canvas" height="170" width="414" style="display: block; box-sizing: border-box; height: 170px; width: 414px;"></canvas>
+            </div>
+        </div>
+
+        <div class="p-4 border-black/12.5 dark:bg-slate-850 dark:shadow-dark-xl shadow-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
+            <h6 class="dark:text-white font-semibold">Users By Townships</h6>
+            <div class="pt-4 chart">
+                <canvas id="chart-bars" class="chart-canvas" height="170" width="414" style="display: block; box-sizing: border-box; height: 170px; width: 414px;"></canvas>
             </div>
         </div>
     </div>
